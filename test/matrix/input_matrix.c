@@ -1,7 +1,7 @@
 #include <stdlib.h>
 #include "matrix.h"
 
-void input_matrix(FILE* f, matrix* j) {
+void input_matrix(FILE* f, pfc_matrix* j) {
 	printf("reading matrix input file...\n");
 	fscanf(f, "%zu", &(j->len));
 	if (!(j->len)) goto err1;

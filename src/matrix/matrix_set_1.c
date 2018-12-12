@@ -1,7 +1,7 @@
 #include <math.h>
 #include "matrix.h"
 
-void pfc_matrix_set_1(pfc_matrix_t* j, pfc_matrix_t* v_j, size_t r) {
+void pfc_matrix_set_1(pfc_matrix* j, pfc_matrix* v_j, size_t r) {
 	//printf("set matrix[%zd][%zd] to 1.\n", r, r);
 	size_t not_zero_r;
 	for (not_zero_r=r;not_zero_r<j->len;not_zero_r++) {
@@ -11,7 +11,7 @@ void pfc_matrix_set_1(pfc_matrix_t* j, pfc_matrix_t* v_j, size_t r) {
 		pfc_matrix_swap(j, r, not_zero_r);
 		pfc_matrix_swap(v_j, r, not_zero_r);
 	}
-	if (abs(j->m[r][r]-1)>0.000001) {
+	if (fabs(j->m[r][r]-1)>0.000001) {
 		double k=1.0/j->m[r][r];
 		pfc_matrix_mult(j, r, k);
 		pfc_matrix_mult(v_j, r, k);

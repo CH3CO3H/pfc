@@ -5,6 +5,6 @@
 
 #define PFC_MAX_N (1<<10)
 
-extern void pfc_swap_double(size_t* a, size_t* b);
+extern void pfc_swap_double(double* a, double* b);
 
 #endif
