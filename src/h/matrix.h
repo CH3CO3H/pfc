@@ -5,8 +5,9 @@
 #include "g.h"
 
 struct pfc_matrix {
-	double m[PFC_MAX_N][PFC_MAX_N];
+	double m[2*PFC_MAX_N][2*PFC_MAX_N];
 	size_t len;
+	size_t nu_pq;
 };
 typedef struct pfc_matrix pfc_matrix;
 
