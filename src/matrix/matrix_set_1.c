@@ -13,8 +13,8 @@ void pfc_matrix_set_1(pfc_matrix* j, pfc_matrix* v_j, size_t r) {
 	}
 	if (fabs(j->m[r][r]-1)>0.000001) {
 		double k=1.0/j->m[r][r];
-		pfc_matrix_mult(j, r, k);
-		pfc_matrix_mult(v_j, r, k);
+		pfc_matrix_row_mult(j, r, k);
+		pfc_matrix_row_mult(v_j, r, k);
 	}
 	for (size_t i=0;i<j->len;i++) {
 		if (i==r) continue;

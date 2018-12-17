@@ -20,11 +20,12 @@ extern pfc_matrix* pfc_mk_jcb(pfc_adm_matrix* adm, pfc_vector* ef);
 extern void pfc_solve_func(pfc_vector* ub, pfc_matrix* jcb, pfc_vector* dlt_ef);
 extern double pfc_get_dlt_ef_max(pfc_vector* dlt_ef);
 extern void pfc_get_new_ef(pfc_vector* ef, pfc_vector* dlt_ef);
+extern double complex pfc_cal_ss(pfc_adm_matrix*, pfc_vector* ef);
 extern void pfc_cal_sij(pfc_adm_matrix* adm, pfc_vector* ef, double complex s_ij[][]);
 extern void pfc_save_rlt(pfc_vector* ef, double complex s_s, double complex s_ij[][]);
 
-extern double pfc_get_e(pfc_vector* ef, size_t i);
-extern double pfc_get_p(size_t i, pfc_vector*);
+// extern double pfc_get_e(pfc_vector* ef, size_t i);
+// extern double pfc_get_p(size_t i, pfc_vector*);
 
 #define pfc_get_pf(pq, i) (pq->a[2*i])
 #define pfc_get_qe(pq, i) (pq->a[2*i+1])

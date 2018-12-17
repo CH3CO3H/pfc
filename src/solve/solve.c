@@ -26,7 +26,8 @@ void solve(pfc_adm_matrix* adm, FILE* f) {
 		dlt_ef_max=pfc_get_dlt_ef_max(dlt_ef);
 		cnt++;
 	} while (dlt_ef_max>epsn);
-	s_s=pfc_cla_ss(adm, ef);
+	printf("iteration count: %zd\n", cnt);
+	s_s=pfc_cal_ss(adm, ef);
 	pfc_cal_sij(adm, ef, s_ij);
 	pfc_save_rlt(ef, s_s, s_ij);
 }
