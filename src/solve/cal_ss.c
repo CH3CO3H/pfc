@@ -1,17 +1,12 @@
 #include "solve.h"
 
 double complex pfc_cal_ss(pfc_adm_matrix* adm, pfc_vector* ef) {
-	size_t n=ef->len;
-	double i_sr=0, i_si=0;
-	double e_s=pfc_get_qe(ef, n-1);
-	double f_s=pfc_get_pf(ef, n-2);
+	size_t n=ef->len>>1;
+	double complex i_s=0;
 	for (size_t i=0;i<n;i++) {
-		double g_sj=pfc_get_g(adm, n-1, i);
-		double b_sj=pfc_get_b(adm, n-1, i);
-		double e_j=pfc_get_e(ef, i);
-		double f_j=pfc_get_f(ef, i);
-		i_sr+=g_sj*e_j-b_sj*f_j;
-		i_si-=g_sj*f_j+b_sj*e_j;
+		double complex u_i=pfc_get_qe(ef, i)+I*pfc_get_pf(ef, i);
+		i_s+=pfc_adm_get_y(adm, n-1, i)*u_i;
 	}
-	return e_s*i_sr-f_s*i_si+I*(f_s*i_sr+e_s*i_si);
+	double complex u_n=pfc_get_qe(ef, n-1)+I*pfc_get_pf(ef, n-1);
+	return conj(i_s)*u_n;
 }

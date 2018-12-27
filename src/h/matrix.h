@@ -18,5 +18,6 @@ extern void pfc_matrix_row_mult(pfc_matrix* j, size_t r, double k);
 extern void pfc_matrix_set_e(pfc_matrix*);
 extern void pfc_matrix_set_1(pfc_matrix* j, pfc_matrix* v_j, size_t r);
 extern pfc_matrix* pfc_matrix_cp(pfc_matrix*);
+extern void pfc_swap_double(double* a, double* b);
 
 #endif

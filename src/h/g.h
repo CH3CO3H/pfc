@@ -4,7 +4,6 @@
 #include <stdio.h>
 
 #define PFC_MAX_N (1<<10)
-
-extern void pfc_swap_double(double* a, double* b);
+#define PFC_PCN 0.00005
 
 #endif

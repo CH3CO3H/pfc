@@ -1,13 +1,16 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <complex.h>
-#include "adm_graph.h"
-#include "adm_matrix.h"
+#include "adm.h"
 
 static void print_adm_matrix(pfc_adm_matrix* m);
 
-int main(void) {
-	FILE* f=fopen("adm_input", "r+");
+int main(int argc, const char* argv[]) {
+	if (argc!=2) {
+		printf("usage: main <input file>");
+		exit(1);
+	}
+	FILE* f=fopen(argv[1], "r");
 	if (f==NULL) {
 		perror("Open input file");
 		return 1;

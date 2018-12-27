@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <errno.h>
-#include "adm_graph.h"
+#include "adm.h"
 
 pfc_adm_graph* pfc_mk_adm_graph(FILE* f) {
 	pfc_adm_graph* g=malloc(sizeof(pfc_adm_graph));
@@ -19,8 +19,7 @@ pfc_adm_graph* pfc_mk_adm_graph(FILE* f) {
 		double yr, yi;
 		fscanf(f, "%zd%zd%lf %lf", &ni, &nj, &yr, &yi);
 		double complex y=yr+yi*I;
-		if (pfc_adm_graph_add(g, ni, nj, y))
-			printf("add adm succeed. %zd->%zd: %lf+i*%lf\n", ni, nj, yr, yi);
+		pfc_adm_graph_add(g, ni, nj, y);
 	}
 	return g;
 }
@@ -44,7 +43,7 @@ bool pfc_adm_graph_add_edge(pfc_adm_node** e, size_t nj, double complex y) {
 }
 
 double complex pfc_adm_graph_get(pfc_adm_graph* g, size_t ni, size_t nj) {
-	if (ni>nj) swap(&ni, &nj);
+	if (ni>nj) pfc_swap_s(&ni, &nj);
 	pfc_adm_node* t=g->a[ni];
 	while (t!=NULL) {
 		if (t->nu==nj) break;
