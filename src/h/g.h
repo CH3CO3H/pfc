@@ -5,5 +5,6 @@
 
 #define PFC_MAX_N (1<<10)
 #define PFC_PCN 0.00005
+#define PFC_ITERATION_LIMITS 10
 
 #endif

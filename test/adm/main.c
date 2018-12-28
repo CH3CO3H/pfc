@@ -4,22 +4,34 @@
 #include "adm.h"
 
 static void print_adm_matrix(pfc_adm_matrix* m);
+static void print_adm_graph(pfc_adm_graph*);
 
 int main(int argc, const char* argv[]) {
-	if (argc!=2) {
-		printf("usage: main <input file>");
-		exit(1);
-	}
+	if (argc!=2) goto err_arg;
 	FILE* f=fopen(argv[1], "r");
-	if (f==NULL) {
-		perror("Open input file");
-		return 1;
-	}
-	
-	pfc_adm_matrix* m=pfc_mk_adm_matrix(pfc_mk_adm_graph(f));
+	if (!f) goto err_fopen;
+	pfc_adm_graph* ag=pfc_mk_adm_graph(f);
+	print_adm_graph(ag);
+	pfc_adm_matrix* m=pfc_mk_adm_matrix(ag);
 	print_adm_matrix(m);
 
 	return 0;
+err_arg:
+	printf("usage: main <input file>");
+	exit(1);
+err_fopen:
+	perror("Open input file");
+	exit(1);
+}
+
+void print_adm_graph(pfc_adm_graph* ag) {
+	size_t n=ag->nu;
+	for (size_t i=0;i<n;i++) {
+		pfc_adm_node* nd=ag->a[i];
+		for (;nd;nd=nd->next) {
+			printf("%zu -> %zu: %lf + j%lf\n", i, nd->nu, creal(nd->y), cimag(nd->y));
+		}
+	}
 }
 
 void print_adm_matrix(pfc_adm_matrix* m) {

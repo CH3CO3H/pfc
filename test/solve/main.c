@@ -4,12 +4,11 @@
 static void print_rlt(pfc_adm_graph*);
 
 int main(int argc, const char* argv[]) {
-	if (argc!=3) goto err_arg;
+	if (argc!=2) goto err_arg;
 	FILE* f=fopen(argv[1], "r");
-	FILE* solve_ipt=fopen(argv[2], "r");
-	if (!f || !solve_ipt) goto err_open_file;
+	if (!f) goto err_open_file;
 	pfc_adm_graph* ag=pfc_mk_adm_graph(f);
-	pfc_solve(ag, solve_ipt);
+	pfc_solve(ag, f);
 	print_rlt(ag);
 	free(ag);
 	return 0;

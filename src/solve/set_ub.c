@@ -22,8 +22,9 @@ void pfc_set_ub(pfc_vector* pq, pfc_vector* ub, pfc_vector* ef, pfc_adm_matrix* 
 		}
 		pfc_set_pf(ub, i, p_i-p_tmp);
 		if (i<nu_pq)
-		pfc_set_qe(ub, i, q_i-q_tmp);
-		else
-		pfc_set_qe(ub, i, q_i*q_i-e_i*e_i-f_i*f_i);
+			pfc_set_qe(ub, i, q_i-q_tmp);
+		else {
+			pfc_set_qe(ub, i, q_i-e_i*e_i-f_i*f_i);
+		}
 	}
 }

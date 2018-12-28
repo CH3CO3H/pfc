@@ -13,7 +13,7 @@ void pfc_solve(pfc_adm_graph* ag, FILE* f) {
 	pfc_vector* ef;
 	pfc_vector* pq;
 	pfc_adm_matrix* adm=pfc_mk_adm_matrix(ag);
-	print_adm_matrix(adm);	//debug
+	/* print_adm_matrix(adm);	//debug */
 	double dlt_ef_max;
 	double complex s_s;
 
@@ -33,12 +33,13 @@ void pfc_solve(pfc_adm_graph* ag, FILE* f) {
 		pfc_set_ub(pq, ub, ef, adm);
 		print_vector("unbalance", ub);	//debug
 		pfc_matrix* jcb=pfc_mk_jcb(adm, ef);
-		print_matrix("matrix jcb", jcb);	//debug
+		/* print_matrix("matrix jcb", jcb);	//debug */
 		pfc_solve_func(ub, jcb, dlt_ef);
 		print_vector("dlt_ef", dlt_ef);	//debug
 		dlt_ef_max=pfc_get_dlt_ef_max(dlt_ef);
 		printf("dlt_ef_max: %lf\n", dlt_ef_max);
 		cnt++;
+		if (cnt>PFC_ITERATION_LIMITS) goto err_nc;
 	} while (dlt_ef_max>PFC_PCN);
 	printf("iteration count: %u\n", cnt);
 	s_s=pfc_cal_ss(adm, ef);
@@ -50,4 +51,8 @@ void pfc_solve(pfc_adm_graph* ag, FILE* f) {
 	free(ef); ef=0;
 	free(dlt_ef); dlt_ef=0;
 	free(ub); ub=0;
+	return;
+err_nc:
+	fprintf(stderr, "Too many iteration times, maybe not converge.\n");
+	exit(1);
 }

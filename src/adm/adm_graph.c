@@ -5,23 +5,32 @@
 #include "adm.h"
 
 pfc_adm_graph* pfc_mk_adm_graph(FILE* f) {
+	int k;
 	pfc_adm_graph* g=malloc(sizeof(pfc_adm_graph));
 	memset(g->a, 0, PFC_MAX_N*sizeof(pfc_adm_node*));
 	size_t nu, edge;
-	fscanf(f, "%zd%zd", &nu, &edge);
-	if (!nu) {
-		perror("0 node. check input file");
-		exit(1);
-	}
+	k=fscanf(f, "%zd%zd\n", &nu, &edge);
+	printf("nodes: %zd, branches: %zd\n", nu, edge);
+	if (k!=2) goto err_scanf;
+	if (!nu || !edge) goto err_0node;
 	g->nu=nu;
 	for (size_t i=0;i<edge;++i) {
 		size_t ni, nj;
-		double yr, yi;
-		fscanf(f, "%zd%zd%lf %lf", &ni, &nj, &yr, &yi);
-		double complex y=yr+yi*I;
-		pfc_adm_graph_add(g, ni, nj, y);
+		double r, x;
+		k=fscanf(f, "| %*u | %zd | %zd | %lf | %lf | %*f |\n", &ni, &nj, &r, &x);
+		if (k!=4) goto err_scanf;
+		double complex z=r+x*I;
+		if (ni>nj) pfc_swap_s(&ni, &nj);
+		pfc_adm_graph_add(g, ni, nj, 1/z);
 	}
 	return g;
+err_0node:
+	perror("0 node or branch. check input file");
+	exit(1);
+err_scanf:
+	perror("Wrong input file fomat.");
+	fprintf(stderr, "match %d\n", k);
+	exit(1);
 }
 
 bool pfc_adm_graph_add(pfc_adm_graph* g, size_t ni, size_t nj, double complex y) {
