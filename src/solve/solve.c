@@ -13,7 +13,7 @@ void pfc_solve(pfc_adm_graph* ag, FILE* f) {
 	pfc_vector* ef;
 	pfc_vector* pq;
 	pfc_adm_matrix* adm=pfc_mk_adm_matrix(ag);
-	/* print_adm_matrix(adm);	//debug */
+	print_adm_matrix(adm);	//debug
 	double dlt_ef_max;
 	double complex s_s;
 

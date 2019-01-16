@@ -1,6 +1,6 @@
 #include "matrix.h"
 
-void print_matrix(const char s[], pfc_matrix* j) {
+void matrix_print(const char s[], pfc_matrix* j) {
 	printf(">>> matrix %s <<<\n", s);
 	size_t n=j->len;
 	printf("matrix size: %zd\n", n);

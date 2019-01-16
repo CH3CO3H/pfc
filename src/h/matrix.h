@@ -1,8 +1,8 @@
-#ifndef PFC_MATRIX_H
-#define PFC_MATRIX_H
-
 #include <stdio.h>
 #include "g.h"
+
+#ifndef PFC_MATRIX_H
+#define PFC_MATRIX_H
 
 struct pfc_matrix {
 	double m[2*PFC_MAX_N][2*PFC_MAX_N];
@@ -11,13 +11,12 @@ struct pfc_matrix {
 };
 typedef struct pfc_matrix pfc_matrix;
 
-extern pfc_matrix* pfc_inverse_matrix(pfc_matrix*);
-extern void pfc_matrix_add(pfc_matrix* j, size_t r1, size_t r2, double k);
-extern void pfc_matrix_swap(pfc_matrix* j, size_t r1, size_t r2);
-extern void pfc_matrix_row_mult(pfc_matrix* j, size_t r, double k);
-extern void pfc_matrix_set_e(pfc_matrix*);
-extern void pfc_matrix_set_1(pfc_matrix* j, pfc_matrix* v_j, size_t r);
+extern pfc_matrix* pfc_matrix_inverse(pfc_matrix*);
 extern pfc_matrix* pfc_matrix_cp(pfc_matrix*);
 extern void pfc_swap_double(double* a, double* b);
+
+#include "matrix/cmpy.h"
+#include "matrix/row_ex.h"
+// #include "matrix/lu.h"
 
 #endif

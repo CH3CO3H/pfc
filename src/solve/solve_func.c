@@ -5,7 +5,7 @@
 extern void print_matrix(const char[], pfc_matrix*);	//debug
 
 void pfc_solve_func(pfc_vector* ub, pfc_matrix* jcb, pfc_vector* dlt_ef) {
-	pfc_matrix* jcb_inv=pfc_inverse_matrix(jcb);
+	pfc_matrix* jcb_inv=pfc_matrix_inverse(jcb);
 	/* print_matrix("jcb inverse", jcb_inv);	//debug */
 	size_t n=ub->len;
 	for (size_t i=0;i<n;i++) {

@@ -25,10 +25,10 @@ extern double complex pfc_cal_ss(pfc_adm_matrix*, pfc_vector* ef);
 extern void pfc_cal_sij(pfc_adm_graph*, pfc_vector* ef);
 //extern void pfc_save_rlt(pfc_vector* ef, double complex s_s, double complex s_ij[][]);
 
-#define pfc_get_pf(pq, i) (pq->a[2*(i)])
-#define pfc_get_qe(pq, i) (pq->a[2*(i)+1])
-#define pfc_set_pf(pq, i, x) pq->a[2*(i)]=(x)
-#define pfc_set_qe(pq, i, x) pq->a[2*(i)+1]=(x)
+#define pfc_get_pf(pq, i) ((pq)->a[2*(i)])
+#define pfc_get_qe(pq, i) ((pq)->a[2*(i)+1])
+#define pfc_set_pf(pq, i, x) (pq)->a[2*(i)]=(x)
+#define pfc_set_qe(pq, i, x) (pq)->a[2*(i)+1]=(x)
 
 #define pfc_jcb_set_h(jcb, i, j, x) jcb->m[2*(i)][2*(j)]=(x)
 #define pfc_jcb_set_n(jcb, i, j, x) jcb->m[2*(i)][2*(j)+1]=(x)

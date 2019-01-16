@@ -9,7 +9,7 @@ pfc_adm_graph* pfc_mk_adm_graph(FILE* f) {
 	pfc_adm_graph* g=malloc(sizeof(pfc_adm_graph));
 	memset(g->a, 0, PFC_MAX_N*sizeof(pfc_adm_node*));
 	size_t nu, edge;
-	k=fscanf(f, "%zd%zd\n", &nu, &edge);
+	k=fscanf(f, "%zd%zd", &nu, &edge);
 	printf("nodes: %zd, branches: %zd\n", nu, edge);
 	if (k!=2) goto err_scanf;
 	if (!nu || !edge) goto err_0node;
@@ -17,7 +17,7 @@ pfc_adm_graph* pfc_mk_adm_graph(FILE* f) {
 	for (size_t i=0;i<edge;++i) {
 		size_t ni, nj;
 		double r, x;
-		k=fscanf(f, "| %*u | %zd | %zd | %lf | %lf | %*f |\n", &ni, &nj, &r, &x);
+		k=fscanf(f, " | %*u | %zd | %zd | %lf | %lf | %*f |", &ni, &nj, &r, &x);
 		if (k!=4) goto err_scanf;
 		double complex z=r+x*I;
 		if (ni>nj) pfc_swap_s(&ni, &nj);
@@ -25,11 +25,10 @@ pfc_adm_graph* pfc_mk_adm_graph(FILE* f) {
 	}
 	return g;
 err_0node:
-	perror("0 node or branch. check input file");
+	fprintf(stderr, "0 node or branch. check input file");
 	exit(1);
 err_scanf:
-	perror("Wrong input file fomat.");
-	fprintf(stderr, "match %d\n", k);
+	fprintf(stderr, "Wrong input file fomat. Match %d\n", k);
 	exit(1);
 }
 
