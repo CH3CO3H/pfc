@@ -1,5 +1,20 @@
 # PFC API DOC
 
+## initial
+
+### type
+
+- `pfc_bus`
+- `pfc_sysinfo`
+
+### func
+
+`pfc_read_base(pfc_sysinfo* sysinfo, FILE* f)`
+
+`pfc_read_bus(pfc_bus* bs[], pfc_sysinfo* sysinfo, FILE* f)`
+
+`pfc_read_branch(pfc_branch* branch[], pfc_sysinfo* sysinfo, FILE* f)`
+
 ## admittance matrix
 
 ### type
