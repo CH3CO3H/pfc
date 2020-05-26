@@ -3,27 +3,29 @@
 
 void pfc_read_bus(pfc_bus* bs[], pfc_sysinfo* sysinfo, FILE* f) {
 	char s[PFC_MAX_LINE];
+	size_t n;
 	size_t nu_pq=0;
-	size_t i;
-	for (i=0;;i++) {
+	fgets(s, PFC_MAX_LINE, f);
+	if (sscanf(s+PFC_READ_BUS_OFFSET, "%zd", &n) != 1) err_fmt();
+	sysinfo->all=n;
+	for (size_t i=0;i<n;i++) {
 		fgets(s, PFC_MAX_LINE, f);
-		int match;
-		if ((match=sscanf(s, "%ld %hhu %lf %lf %lf %lf %*u %lf %lf ' %*s ' %lf",
+		if ((sscanf(s, "%zd %*12c %*d %*d %hhu %lf %lf %lf %lf %lf %lf %lf",
 			&bs[i]->no,
 			&bs[i]->type,
-			&bs[i]->pl,
-			&bs[i]->ql,
-			&bs[i]->g,
-			&bs[i]->b,
 			&bs[i]->v,
 			&bs[i]->va,
+			&bs[i]->pl,
+			&bs[i]->ql,
+			&bs[i]->pg,
+			&bs[i]->qg,
 			&bs[i]->bv)) != 9) {
-			break;
+			err_fmt();
 		}
-		if (bs[i]->type==1) nu_pq++;
+		if (!bs[i]->type || bs[i]->type==1) nu_pq++;
 	}
-	sysinfo->all=i;
-	sysinfo->ld=nu_pq;
+	sysinfo->pq=nu_pq;
 	int e;
-	if (sscanf(s, "%d", &e)!=1 && e) err_fmt();
+	fgets(s, PFC_MAX_LINE, f);
+	if (sscanf(s, "%d", &e)!=1 || e!=-999) err_fmt();
 }

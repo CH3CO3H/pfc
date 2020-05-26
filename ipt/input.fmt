@@ -1,9 +1,0 @@
-<No. nodes> <No. branches>
-| <No.> | <start(include 0)>| <end> | <r> | <x> | <b>
-...
-<No. nodes> <No. PQ>
-<e_s> <f_s>
-| <No.> | <P~G> | <Q~G> | <P~L> | <Q~L>|
-...
-| <No.> | <P~G> | <U> | <P~L> | <Q~L> |
-...

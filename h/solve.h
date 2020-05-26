@@ -7,15 +7,8 @@
 #ifndef SOLVE_H
 #define SOLVE_H
 
-struct pfc_vector {
-	double a[PFC_MAX_N*2];
-	size_t len;
-	size_t nu_pq;
-};
-typedef struct pfc_vector pfc_vector;
-
-extern void pfc_solve(pfc_adm_graph* ag, FILE* f);
-extern void pfc_initial(pfc_vector** pq, pfc_vector** ef, FILE* f);
+extern void pfc_solve(pfc_adm_matrix* adm, pfc_sysinfo* sysinfo);
+extern void pfc_solve_inl(pfc_vector** pq, pfc_vector** ef, FILE* f);
 extern void pfc_set_ub(pfc_vector* pq, pfc_vector* ub, pfc_vector* ef,pfc_adm_matrix* adm);
 extern pfc_matrix* pfc_mk_jcb(pfc_adm_matrix* adm, pfc_vector* ef);
 extern void pfc_solve_func(pfc_vector* ub, pfc_matrix* jcb, pfc_vector* dlt_ef);

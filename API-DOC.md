@@ -1,41 +1,89 @@
 # PFC API DOC
 
+## global
+
+### type
+
+#### `pfc_sysinfo`
+
+```c
+struct pfc_sysinfo {
+	double b;	// System base(MVA)
+	size_t all;	// Nomber of all buses
+	size_t br;	// Nomber of branches
+	size_t pq;	// Nomber of PQ buses
+};
+```
+
 ## initial
 
 ### type
 
-- `pfc_bus`
-- `pfc_sysinfo`
+#### `pfc_bus`
+
+```c
+struct pfc_bus {
+	size_t no;  // No.
+	unsigned char type; /*  1 - Load bus (no generation)
+		2 - Generator or plant bus
+		3 - Swing bus
+		4 - Islolated bus
+		*/
+	double pl;  // load MW
+	double ql;  // load MVAR
+	double pg;  // Generation MW
+	double qg;  // Generation MVAR
+	double v;   // Voltage magnitude, per unit
+	double va;  // Voltage angle, degrees
+	double bv;  // Base voltage, KV
+};
+```
+
+#### `pfc_branch`
+
+```c
+struct pfc_branch {
+	size_t from;
+	size_t to;
+	double r;
+	double x;
+	double b;
+};
+```
 
 ### func
 
-`pfc_read_base(pfc_sysinfo* sysinfo, FILE* f)`
+#### `pfc_read_base(pfc_sysinfo* sysinfo, FILE* f)`
 
-`pfc_read_bus(pfc_bus* bs[], pfc_sysinfo* sysinfo, FILE* f)`
+Read system information from input file, store them in `sysinfo`.
 
-`pfc_read_branch(pfc_branch* branch[], pfc_sysinfo* sysinfo, FILE* f)`
+#### `pfc_read_bus(pfc_bus* bs[], pfc_sysinfo* sysinfo, FILE* f)`
+
+Read bus info.
+
+#### `pfc_read_branch(pfc_branch* branch[], pfc_sysinfo* sysinfo, FILE* f)`
+
+Read branch info.
 
 ## admittance matrix
 
 ### type
 
-- `pfc_adm_graph`
-- `pfc_adm_node`
-- `pfc_adm_matrix`
+#### `pfc_adm_matrix`
+
+`double complex[PFC_MAX_N][PFC_MAX_N]`
 
 ### func
 
-#### `pfc_adm_matrix* pfc_mk_adm_matrix(pfc_adm_graph* g)`
+#### `pfc_adm_matrix* pfc_mk_adm_matrix(pfc_branch* br[PFC_MAX_BRANCH], pfc_sysinfo* sys, pfc_bus* bs[PFC_MAX_N]);`
 
-make admittance matrix from admittance graph.
+Make admittance matrix, in bus data order.
 
-#### `pfc_adm_graph* pfc_mk_adm_graph(FILE* f)`
+#### `double complex pfc_adm_get_y(pfc_adm_matrix* adm, int i, int j)`
 
-make admittance graph from input file
+#### `double pfc_adm_get_b(pfc_adm_matrix* adm, int i, int j)`
 
-#### `bool pfc_adm_graph_add(pfc_adm_graph* g, size_t ni, size_t nj, double complex y)`
-
-#### `double complex pfc_adm_graph_get(pfc_adm_graph* g, size_t ni, size_t nj)`
+#### `double pfc_adm_get_g(pfc_adm_matrix* adm, int i, int j)`
 
 ## matrix handle
 

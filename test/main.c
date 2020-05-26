@@ -1,9 +1,4 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <complex.h>
-#include "adm.h"
-
-static void print_adm_matrix(pfc_adm_matrix* m, size_t n);
+#include "pfc.h"
 
 int main(int argc, const char* argv[]) {
 	if (argc!=2) goto err_arg;
@@ -15,18 +10,23 @@ int main(int argc, const char* argv[]) {
 	pfc_branch* branch[PFC_MAX_BRANCH];
 	for (size_t i=0;i<PFC_MAX_BRANCH;i++)
 		branch[i]=malloc(sizeof(pfc_branch));
-	pfc_sysinfo* sysinfo;
-	sysinfo=malloc(sizeof(pfc_sysinfo));
+	pfc_sysinfo* sysinfo=pfc_make_sysinfo();
 	pfc_read_base(sysinfo, f);
 	printf("System base: %lfMVA.\n", sysinfo->b);
 	pfc_read_bus(bus, sysinfo, f);
 	size_t n=sysinfo->all;
 	size_t pq=sysinfo->pq;
-	printf("Bus: %zi\nPQ cnt: %zi\n", n, pq);
+	printf("Bus: %zd\nPQ: %zd\n", n, pq);
 	pfc_read_branch(branch, sysinfo, f);
-	printf("Branch: %zi\n", sysinfo->br);
+	printf("Branch: %zd\n", sysinfo->br);
 	pfc_adm_matrix* m=pfc_mk_adm_matrix(branch, sysinfo, bus);
 	print_adm_matrix(m, n);
+	// pfc_matrix* b_n;
+	// pfc_matrix* b_m;
+	// pfc_matrix_b(m, b_n, b_m, n);
+	// pfc_matrix_reverse(b_n);
+	// pfc_matrix_reverse(b_m);
+	pfc_solve(adm);
 	return 0;
 err_arg:
 	printf("usage: main <input_file>\n");

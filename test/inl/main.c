@@ -1,6 +1,5 @@
 #include <stdlib.h>
 #include <errno.h>
-#include "g.h"
 #include "inl.h"
 
 int main(int argc, const char* argv[]) {
@@ -19,7 +18,7 @@ int main(int argc, const char* argv[]) {
 	printf("System base: %lfMVA.\n", sysinfo->b);
 	pfc_read_bus(bus, sysinfo, f);
 	size_t n=sysinfo->all;
-	size_t pq=sysinfo->ld;
+	size_t pq=sysinfo->pq;
 	printf("Bus: %zi\nPQ cnt: %zi\n", n, pq);
 	pfc_read_branch(branch, sysinfo, f);
 	printf("Branch: %zi\n", sysinfo->br);

@@ -1,1 +1,1 @@
-./main ../../ipt/ieee300pti
+./main ../../ipt/ieee57cdf.txt

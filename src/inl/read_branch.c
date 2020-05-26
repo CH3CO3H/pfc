@@ -3,20 +3,23 @@
 
 void pfc_read_branch(pfc_branch* branch[], pfc_sysinfo* sysinfo, FILE* f) {
 	char s[PFC_MAX_LINE];
-	size_t i;
-	for (i=0;;i++) {
+	size_t n;
+	fgets(s, PFC_MAX_LINE, f);
+	if (sscanf(s+PFC_READ_BR_OFFSET, "%zd", &n) != 1) err_fmt();
+	for (size_t i=0;i<n;i++) {
 		fgets(s, PFC_MAX_LINE, f);
 		int match;
-		if ((match=sscanf(s, "%ld%ld%*d%lf%lf%lf", 
+		if ((match=sscanf(s, "%zd%zd%*d%*d%*d%*d%lf%lf%lf", 
 			&branch[i]->from,
 			&branch[i]->to,
 			&branch[i]->r,
 			&branch[i]->x,
 			&branch[i]->b)) != 5) {
-			break;
+			err_fmt();
 		}
 	}
-	sysinfo->br=i;
+	sysinfo->br=n;
 	int e;
-	if (sscanf(s, "%d", &e)!=1 && e) err_fmt();
+	fgets(s, PFC_MAX_LINE, f);
+	if (sscanf(s, "%d", &e)!=1 || e!=-999) err_fmt();
 }

@@ -1,1 +1,1 @@
-./main ../../ipt/input-30.txt
+./main ../../ipt/book5cdf.txt
